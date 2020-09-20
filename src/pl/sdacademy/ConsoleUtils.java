@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class ConsoleUtils {
     public static boolean debugMode = false;
 
-
+    // uzywamy nawy w stringach by kolorowac tekst
     public static final String C_RESET = "\u001B[0m";
 
     public static final String C_BLACK = "\u001B[30m";
@@ -46,9 +46,17 @@ public class ConsoleUtils {
     public static final String C_WHITE_BACKGROUND = "\u001B[47m";
     public static final String C_YELLOW_BACKGROUND = "\u001B[43m";
 
-    public static final String c_purple(String message) {
+    public static  String c_purple(String message) {
         return C_PURPLE + message + C_RESET;
     }
+// przeciazenie
+    public static  String c_red(String message) {
+        return C_RED + message + C_RESET;
+    }public static  String c_red(int message) {
+        return C_RED + message + C_RESET;
+    }
+
+
     public static String promptForString(String prompt) {
         Scanner myObj = new Scanner(System.in);
         System.out.print(prompt);
@@ -65,11 +73,11 @@ public class ConsoleUtils {
             if (!scanner.hasNextInt()) {
                 scanner.next();
                 System.out.println("Please provide correct number");
-                continue;
+             //   continue;
             } else {
                 return scanner.nextInt();
             }
-        } while(true);
+        } while (true);
     }
 
     public static void clearScreen() {

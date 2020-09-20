@@ -4,28 +4,43 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import static pl.sdacademy.ConsoleUtils.*;
-
+/**
+ * singleton class- jedna instancja - wzorzec projektowy , referencja na sama siebie - nad opisem
+ */
 public class HeroBuilder {
 
-    public static int skillPoints = 100;
+   // tylko jeden hero bulider
+    private static   HeroBuilder Instance;
+    // prywatny konstuktor
+    private HeroBuilder(){}
+   // publiczny kjonstruktor
+    public static HeroBuilder getInstance(){
+        if (Instance == null) {
+            Instance = new HeroBuilder();
+        }
+            return Instance;
+        }
+
+    private static int skillPoints = 100;
 
     // delete me - ideally - use stub to pass as a parameter - in future reading player builds configs from files etc...
-    public Hero buildHeroForTesting() {
-        skillPoints = 0;
-        // name, sex, strength, stamina, dexterity, intelligence, wisdom, charisma
-        return new Hero("HERCULES", Sex.MALE, 95, 1, 1, 1, 1, 1);
-    }
+//    public Hero buildHeroForTesting() {
+//        skillPoints = 0;
+//        // name, sex, strength, stamina, dexterity, intelligence, wisdom, charisma
+//        return new Hero("HERCULES", Sex.MALE, 95, 1, 1, 1, 1, 1);
+//    }
 
     public Hero buildHero() {
         System.out.println("skill points left: " + skillPoints);
 
         String name = promptForString("Enter character name> ");
         String sexInput = promptForString("Enter character sex [M]ale, [F]emale, [O]ther> ");
-        String sexSafeInput = sexInput.toLowerCase();
+        // zaminana na male literki
+        String lowerCaseImput = sexInput.toLowerCase();
 
-        Sex sex = null;
-
-        switch (sexSafeInput) {
+        Sex sex ;
+//ustawia zmiennna sex male , female, other zaczytujac z konsoli
+        switch (lowerCaseImput) {
             case "m":
             case "ma":
             case "mal":
@@ -71,8 +86,7 @@ public class HeroBuilder {
                     "[4] intelligence: " + intelligence + "\n" +
                     "[5] wisdom:       " + wisdom +       "\n" +
                     "[6] charisma:     " + charisma +     "\n\n" +
-                    "[anything else] exit"
-            );
+                    "[anything else] exit");
             int choice = promptForInt("> ");
             switch (choice) {
                 case 1: strength = readSkillValueFor("strength", strength); break;
@@ -86,7 +100,7 @@ public class HeroBuilder {
                     if(skillPoints == 0 && allStatFieldsSet) {
                         exit = true;
                     } else {
-                        promptForString("You have some points to set - remember that stats cannot be 0");
+                        promptForString("You have some points to set - remember that stats cannot be 0 ");
                     }
             }
         } while (!exit);
@@ -95,8 +109,8 @@ public class HeroBuilder {
     }
 
     public int readSkillValueFor(String fieldName, int currentFieldValue) {
-        int value = -1;
-        int newSkillPointValue = -1;
+        int value ;
+        int newSkillPointValue ;
 
         do {
             value = promptForInt("Enter " + fieldName + " points> ");
